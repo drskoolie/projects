@@ -16,7 +16,6 @@ string = r"""\documentclass{article}
 \usepackage{amsmath}
 
 \begin{document}
-\thispagestyle{empty}
 
 \begin{center}
   {\small\textbf{Values of Q(x) for 0 $\le$ x $\le$ 5}}
@@ -34,20 +33,23 @@ string += "}\n\n\t\hline\n"
 
 string += "\t "
 for col in range(cols):
-    string += "$Q$ & $Q(x)$ & "
+    string += "$x$ & $Q(x)$ & "
 
 string = string[:-2]
-string += "\\\ \hline \n"
+string += "\\\ \n\hline\n"
 
 for row in range(rows):
     string += "\t "
     for col in range(cols):
-        string += f"{x[col + row*cols]:.2f} & "
+        string += f"{x[row + col*rows]:.2f} & {y[row + col*rows]:1.3E} & "
 
     string = string[:-2]
     string += " \\\ \n"
 
 string += r"""
+
+    \hline
+
 \end{tabular}
 \end{center}
 

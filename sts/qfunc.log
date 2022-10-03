@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.10.3)  3 OCT 2022 17:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2022.10.3)  3 OCT 2022 17:41
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -97,19 +97,24 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 4.
 LaTeX Font Info:    ... okay on input line 4.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 4.
 LaTeX Font Info:    ... okay on input line 4.
- [1
+
+Overfull \hbox (86.4732pt too wide) in paragraph at lines 11--41
+ [] 
+ []
+
+[1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./qfunc.aux) ) 
 Here is how much of TeX's memory you used:
  1115 strings out of 478287
  16889 string characters out of 5849289
- 322374 words of memory out of 5000000
+ 334374 words of memory out of 5000000
  19368 multiletter control sequences out of 15000+600000
  472296 words of font info for 39 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  54i,7n,62p,201b,193s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
-Output written on qfunc.pdf (1 page, 41678 bytes).
+Output written on qfunc.pdf (1 page, 42944 bytes).
 PDF statistics:
  28 PDF objects out of 1000 (max. 8388607)
  16 compressed objects within 1 object stream
