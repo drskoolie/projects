@@ -14,3 +14,28 @@ def test_gaussian_init_numpy():
 
     assert [g.mu, g.var, g.n] == [2.5, 1.25, 4]
 
+def test_gaussian_len():
+    x = np.array([1, 2, 3, 4])
+    g = Gaussian.from_numpy(x)
+
+    assert len(g) == len(x)
+
+def test_gaussian_eq():
+    x = np.array([1, 2, 3, 4])
+    g0 = Gaussian.from_numpy(x)
+    g1 = Gaussian.from_numpy(x)
+
+    assert g0 == g1
+
+def test_gaussian_add_n_same():
+    x0 = np.array([1, 2])
+    x1 = np.array([3, 4])
+    x2 = np.concatenate([x0, x1])
+
+    g0 = Gaussian.from_numpy(x0)
+    g1 = Gaussian.from_numpy(x1)
+    g2 = Gaussian.from_numpy(x2)
+
+    g = g0 + g1
+
+    assert g == g2
