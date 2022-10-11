@@ -1,25 +1,49 @@
-import random
+from functools import wraps
+from time import time
+from matplotlib import pyplot as plt
 
-random.seed(12345)
-n = 10
+def timing(f):
+    @wraps(f)
+    def wrap(*args, **kw):
+        ts = time()
+        result = f(*args, **kw)
+        te = time()
+        return te-ts
+    return wrap
 
-x = [random.randint(1, 10000000) for _ in range(n)]
+@timing
+def foo_o1(n):
+    for i in range(n):
+        x = i * i
 
-def min_n(input_list):
-    min = 100000000000000000
+@timing
+def foo_o2(n):
+    for i in range(n):
+        for j in range(n):
+            x = i * i
 
-    for element in input_list:
-        if element < min:
-            min = element
 
-    return min
+@timing
+def foo_o3(n):
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                y = k * k
 
-print(min_n(x))
 
-def min_n_2(input_list):
-    min = 100000000000000000
-    for element1 in input_list:
-        for element2 in input_list:
-            if element1 < element2:
+x = [x for x in range(100)]
+y_o1 = []
+y_o2 = []
+y_o3 = []
 
+for n in x:
+    y_o1.append(foo_o1(n))
+    y_o2.append(foo_o2(n))
+    y_o3.append(foo_o3(n))
+
+plt.plot(x, y_o1, label='O(n)')
+plt.plot(x, y_o2, label='O(n$^2$)')
+plt.plot(x, y_o3, label='O(n$^3$)')
+plt.legend(loc = 'best')
+plt.show()
 
