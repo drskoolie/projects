@@ -39,3 +39,17 @@ def test_gaussian_add_n_same():
     g = g0 + g1
 
     assert g == g2
+
+
+def test_gaussian_add_n_same1():
+    x0 = np.array([1, 3, 1])
+    x1 = np.array([3, 4, 5])
+    x2 = np.concatenate([x0, x1])
+
+    g0 = Gaussian.from_numpy(x0)
+    g1 = Gaussian.from_numpy(x1)
+    g2 = Gaussian.from_numpy(x2)
+
+    g = g0 + g1
+
+    assert g == g2
