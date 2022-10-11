@@ -38,9 +38,8 @@ if __name__ == "__main__":
     import numpy as np
 
 
-    x0 = np.array([3, 4, 5])
-    x1 = np.array([1, 3, 1])
-
+    x0 = np.array([1, 1, 1, 1, 1, 1, 1, 1])
+    x1 = np.array([10])
     x2 = np.concatenate((x0, x1))
 
     g0 = Gaussian.from_numpy(x0)
@@ -51,7 +50,5 @@ if __name__ == "__main__":
     print(g1)
     print(g2)
 
-    y0 = g0.n * (g0.var + g0.mu ** 2)
-    y1 = g1.n * (g1.var + g1.mu ** 2)
-    ((y0 + y1) / (g2.n)) - g2.mu ** 2
+    g0 + g1
 

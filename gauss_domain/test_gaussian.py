@@ -27,7 +27,7 @@ def test_gaussian_eq():
 
     assert g0 == g1
 
-def test_gaussian_add_n_same():
+def test_gaussian_add_n_same0():
     x0 = np.array([1, 2])
     x1 = np.array([3, 4])
     x2 = np.concatenate([x0, x1])
@@ -44,6 +44,48 @@ def test_gaussian_add_n_same():
 def test_gaussian_add_n_same1():
     x0 = np.array([1, 3, 1])
     x1 = np.array([3, 4, 5])
+    x2 = np.concatenate([x0, x1])
+
+    g0 = Gaussian.from_numpy(x0)
+    g1 = Gaussian.from_numpy(x1)
+    g2 = Gaussian.from_numpy(x2)
+
+    g = g0 + g1
+
+    assert g == g2
+
+
+def test_gaussian_add_n_dif():
+    x0 = np.array([1, 3, 4, 5])
+    x1 = np.array([-2, 3, 5])
+    x2 = np.concatenate([x0, x1])
+
+    g0 = Gaussian.from_numpy(x0)
+    g1 = Gaussian.from_numpy(x1)
+    g2 = Gaussian.from_numpy(x2)
+
+    g = g0 + g1
+
+    assert g == g2
+
+
+def test_gaussian_add_single_value():
+    x0 = np.array([1, 3, 4, 5])
+    x1 = np.array([10])
+    x2 = np.concatenate([x0, x1])
+
+    g0 = Gaussian.from_numpy(x0)
+    g1 = Gaussian.from_numpy(x1)
+    g2 = Gaussian.from_numpy(x2)
+
+    g = g0 + g1
+
+    assert g == g2
+
+
+def test_gaussian_add_two_single_values():
+    x0 = np.array([1])
+    x1 = np.array([10])
     x2 = np.concatenate([x0, x1])
 
     g0 = Gaussian.from_numpy(x0)
