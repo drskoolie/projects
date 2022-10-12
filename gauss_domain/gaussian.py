@@ -29,6 +29,13 @@ class Gaussian():
 
         return Gaussian(mu_new, var_new, n_new)
 
+    def __mul__(self, other):
+        n_new = int((self.n + other.n)/2)
+        mu_new = (self.mu*self.n + other.mu*other.n)/(self.n + other.n)
+        var_new = (self.var*self.n + other.var*other.n)/(self.n + other.n)
+
+        return Gaussian(mu_new, var_new, n_new)
+
     def __repr__(self):
         return f"Gaussian({self.mu:.2f}, {self.var:.2f}, {self.n})"
 
@@ -37,18 +44,14 @@ if __name__ == "__main__":
     ## Part 0: Intialization
     import numpy as np
 
-
-    x0 = np.array([1, 1, 1, 1, 1, 1, 1, 1])
-    x1 = np.array([10])
-    x2 = np.concatenate((x0, x1))
+    x0 = np.array([1, 3])
+    x1 = np.array([3, 4])
 
     g0 = Gaussian.from_numpy(x0)
     g1 = Gaussian.from_numpy(x1)
-    g2 = Gaussian.from_numpy(x2)
 
     print(g0)
     print(g1)
-    print(g2)
 
-    g0 + g1
+    print(g0 * g1)
 
