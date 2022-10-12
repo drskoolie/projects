@@ -96,15 +96,18 @@ def test_gaussian_add_two_single_values():
 
     assert g == g2
 
-def test_gaussian_convolve_same_n():
-    x0 = np.array([1, 2])
+def test_gaussian_multiply_n_single():
+    x0 = np.array([2])
     x1 = np.array([3, 4])
-    x2 = np.convolve(x0, x1)
 
     g0 = Gaussian.from_numpy(x0)
     g1 = Gaussian.from_numpy(x1)
-    g2 = Gaussian.from_numpy(x2)
-
     g = g0 * g1
 
-    assert g == g2
+    mu_new = g0.mu * g1.mu
+    var_new = g0.var + g1.var
+    n_new = g1.n
+
+    g_new = Gaussian(mu_new, var_new, n_new)
+
+    assert g == g_new
