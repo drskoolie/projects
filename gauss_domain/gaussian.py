@@ -30,12 +30,17 @@ class Gaussian():
         return Gaussian(mu_new, var_new, n_new)
 
     def __mul__(self, other):
-        if self.n or other.n == 1:
+        if self.n == 1:
             mu_new = self.mu * other.mu
-            var_new = self.var + other.var
-            n_new = self.n + other.n - 1
+            var_new = (self.mu ** 2) * other.var
+            n_new = other.n
 
-            return Gaussian(mu_new, var_new, n_new)
+        elif other.n == 1:
+            mu_new = self.mu * other.mu
+            var_new = (other.mu ** 2) * self.var
+            n_new = self.n
+
+        return Gaussian(mu_new, var_new, n_new)
 
     def __repr__(self):
         return f"Gaussian({self.mu:.2f}, {self.var:.2f}, {self.n})"
@@ -44,6 +49,7 @@ class Gaussian():
 if __name__ == "__main__":
     ## Part 0: Intialization
     import numpy as np
+    import matplotlib.pyplot as plt
 
     x0 = np.array([2])
     x1 = np.array([3, 4])
@@ -55,4 +61,12 @@ if __name__ == "__main__":
     print(f"g1: {g1}")
 
     print(g0 * g1)
+
+    y = 50
+    z = y * np.random.normal(loc=g1.mu, scale=g1.var**0.5, size=100000)
+    print(f"z(mu) = {z.mean()}, z(var) = {z.std() ** 2}")
+    print(f"z(mu) = {y * g1.mu}, z(var) {(y ** 2) * g1.var}")
+    plt.hist(z, bins=1000)
+    plt.show()
+
 

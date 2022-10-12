@@ -96,7 +96,7 @@ def test_gaussian_add_two_single_values():
 
     assert g == g2
 
-def test_gaussian_multiply_n_single():
+def test_gaussian_multiply_n_single_first_arg():
     x0 = np.array([2])
     x1 = np.array([3, 4])
 
@@ -105,9 +105,26 @@ def test_gaussian_multiply_n_single():
     g = g0 * g1
 
     mu_new = g0.mu * g1.mu
-    var_new = g0.var + g1.var
+    var_new = (g0.mu ** 2) * g1.var
     n_new = g1.n
 
     g_new = Gaussian(mu_new, var_new, n_new)
 
     assert g == g_new
+
+def test_gaussian_multiply_n_single_second_arg():
+    x0 = np.array([3, 4])
+    x1 = np.array([2])
+
+    g0 = Gaussian.from_numpy(x0)
+    g1 = Gaussian.from_numpy(x1)
+    g = g0 * g1
+
+    mu_new = g0.mu * g1.mu
+    var_new = (g1.mu ** 2) * g0.var
+    n_new = g0.n
+
+    g_new = Gaussian(mu_new, var_new, n_new)
+
+    assert g == g_new
+
