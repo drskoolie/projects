@@ -41,3 +41,19 @@ print("******************** Testing Data ********************")
 display(X_test)
 display(pd.DataFrame(X_test_imputed, columns=X_train.columns))
 display(pd.DataFrame(X_test_encoded, columns=encoder.get_feature_names_out(X_train.columns)))
+
+## Part 2: Pipeline
+pipe = Pipeline([
+    ('imputer', SimpleImputer(strategy='constant', fill_value='missing')),
+    ('encoder', OneHotEncoder(handle_unknown='ignore', sparse=False))
+    ])
+
+pipe.fit(X_train)
+
+print("******************** Training Data ********************")
+display(X_train)
+display(pd.DataFrame(pipe.transform(X_train), columns=pipe['encoder'].get_feature_names_out(X_train.columns)))
+
+print("******************** Training Data ********************")
+display(X_test)
+display(pd.DataFrame(pipe.transform(X_test), columns=pipe['encoder'].get_feature_names_out(X_test.columns)))
