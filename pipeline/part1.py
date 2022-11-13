@@ -26,34 +26,30 @@ imputer = SimpleImputer(strategy='constant', fill_value='missing')
 X_train_imputed = imputer.fit_transform(X_train)
 
 encoder = OneHotEncoder(handle_unknown='ignore', sparse=False)
-X_train_encoder = encoder.fit_transform(X_train_imputed)
-X_train_encoder
+X_train_encoded = encoder.fit_transform(X_train_imputed)
 
-print("******************** Training Data ********************")
-display(X_train)
-display(pd.DataFrame(X_train_imputed, columns=X_train.columns))
-display(pd.DataFrame(X_train_encoder, columns=encoder.get_feature_names_out(X_train.columns)))
+model = LinearRegression()
+
+model.fit(X_train_encoded, y_train)
+y_train_pred = model.predict(X_train_encoded)
+print(f"Predictions on training data: {y_train_pred}")
 
 X_test_imputed = imputer.transform(X_test)
 X_test_encoded = encoder.transform(X_test_imputed)
-
-print("******************** Testing Data ********************")
-display(X_test)
-display(pd.DataFrame(X_test_imputed, columns=X_train.columns))
-display(pd.DataFrame(X_test_encoded, columns=encoder.get_feature_names_out(X_train.columns)))
+y_test_pred = model.predict(X_test_encoded)
+print(f"Predictions on test data: {y_test_pred}")
 
 ## Part 2: Pipeline
 pipe = Pipeline([
     ('imputer', SimpleImputer(strategy='constant', fill_value='missing')),
-    ('encoder', OneHotEncoder(handle_unknown='ignore', sparse=False))
+    ('encoder', OneHotEncoder(handle_unknown='ignore', sparse=False)),
+    ('model', LinearRegression())
     ])
 
-pipe.fit(X_train)
+pipe.fit(X_train, y_train)
 
-print("******************** Training Data ********************")
-display(X_train)
-display(pd.DataFrame(pipe.transform(X_train), columns=pipe['encoder'].get_feature_names_out(X_train.columns)))
+y_train_pred = pipe.predict(X_train)
+print(f"Predictions on training data: {y_train_pred}")
 
-print("******************** Training Data ********************")
-display(X_test)
-display(pd.DataFrame(pipe.transform(X_test), columns=pipe['encoder'].get_feature_names_out(X_test.columns)))
+y_test_pred = pipe.predict(X_test)
+print(f"Predictions on test data: {y_test_pred}")
