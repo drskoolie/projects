@@ -16,40 +16,37 @@ seed = 123
 df = load_dataset('tips').drop(columns=['tip', 'sex']).sample(n=5, random_state=seed)
 df.iloc[[1, 2, 4], [2, 4]] = np.nan
 
-X_train, X_test, y_train, y_test = train_test_split(df.drop(columns=['total_bill', 'size']),
+X_train, X_test, y_train, y_test = train_test_split(df.drop(columns=['total_bill']),
                                                     df['total_bill'],
                                                     test_size=0.2,
                                                     random_state=seed)
 
-## Part 1: No Pipeline
-imputer = SimpleImputer(strategy='constant', fill_value='missing')
-X_train_imputed = imputer.fit_transform(X_train)
+## Part 1: ColumnTransformer
+categorical = list(X_train.select_dtypes('category').columns)
+numerical = list(X_train.select_dtypes('number').columns)
 
-encoder = OneHotEncoder(handle_unknown='ignore', sparse=False)
-X_train_encoded = encoder.fit_transform(X_train_imputed)
-
-model = LinearRegression()
-
-model.fit(X_train_encoded, y_train)
-y_train_pred = model.predict(X_train_encoded)
-print(f"Predictions on training data: {y_train_pred}")
-
-X_test_imputed = imputer.transform(X_test)
-X_test_encoded = encoder.transform(X_test_imputed)
-y_test_pred = model.predict(X_test_encoded)
-print(f"Predictions on test data: {y_test_pred}")
-
-## Part 2: Pipeline
-pipe = Pipeline([
+cat_pipe = Pipeline([
     ('imputer', SimpleImputer(strategy='constant', fill_value='missing')),
-    ('encoder', OneHotEncoder(handle_unknown='ignore', sparse=False)),
-    ('model', LinearRegression())
+    ('encoder', OneHotEncoder(handle_unknown='ignore', sparse=False))
     ])
 
-pipe.fit(X_train, y_train)
+num_pipe = Pipeline([
+    ('imputer', SimpleImputer(strategy='median')),
+    ('scaler', MinMaxScaler)
+    ])
 
-y_train_pred = pipe.predict(X_train)
-print(f"Predictions on training data: {y_train_pred}")
+preprocessor = ColumnTransformer([
+    ('cat', cat_pipe, categorical),
+    ('num', num_pipe, numerical),
+    ])
 
-y_test_pred = pipe.predict(X_test)
-print(f"Predictions on test data: {y_test_pred}")
+preprocessor.fit(X_train)
+
+cat_columns = preprocessor.named_transformers_['cat']['encoder'].get_feature_names_out(categorical)
+columns = np.append(cat_columns, numerical)
+
+display(X_train)
+display(pd.DataFrame(preprocessor.transform(X_train), columns=columns))
+
+display(X_test)
+display(pd.DataFrame(preprocessor.transform(X_test), columns=columns))
