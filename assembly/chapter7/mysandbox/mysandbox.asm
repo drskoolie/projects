@@ -4,11 +4,10 @@ section .text
 	global _start
 
 _start:
-	nop
-	mov ax,067FEh
-	mov bx,ax
-	mov cl,bh
-	mov ch,bl
-	nop
+		nop
+		mov eax,0FFFFFFFFh
+		mov ebx,03B72h
+		mul ebx
+		nop
 
 section .bss

@@ -1,0 +1,13 @@
+     1                                  SECTION .bss
+     2 00000000 ??                      	Buff resb 1
+     3                                  
+     4                                  SECTION .data
+     5                                  
+     6                                  SECTION .text
+     7                                  	global _start
+     8                                  
+     9                                  _start:
+    10 00000000 90                      		nop				; Keep our capricious debugger happy
+    11                                  
+    12 00000001 B803000000              Read:	mov eax,3		; Specify sys_read call
+    13 00000006 BB00000000              		mov ebx,0		; Specify File Descriptor 0: Standard Input
